@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CameraTab extends StatelessWidget {
+class CameraPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

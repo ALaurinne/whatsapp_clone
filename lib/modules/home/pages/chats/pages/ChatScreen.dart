@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/config/config.dart';
-import 'package:new_project/models/ChatListItem.dart';
-import 'package:new_project/models/ChatMessage.dart';
+import 'package:new_project/modules/home/pages/chats/models/ChatListItem.dart';
+import 'package:new_project/modules/home/pages/chats/models/ChatMessage.dart';
 
 class ChatScreen extends StatefulWidget {
   final ChatListItem person;

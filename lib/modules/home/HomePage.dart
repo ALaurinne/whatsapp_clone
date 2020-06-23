@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/config/config.dart';
-import 'package:new_project/tabs/CallsTab.dart';
-import 'package:new_project/tabs/CameraTab.dart';
-import 'package:new_project/tabs/ChatsTab.dart';
-import 'package:new_project/tabs/StatusTab.dart';
+import 'package:new_project/modules/home/pages/calls/CallsPage.dart';
+import 'package:new_project/modules/home/pages/camera/CameraPage.dart';
+import 'package:new_project/modules/home/pages/chats/ChatsPage.dart';
+import 'package:new_project/modules/home/pages/story/StatusPage.dart';
+
 
 class HomePage extends StatelessWidget {
   @override
@@ -51,10 +52,10 @@ class HomePage extends StatelessWidget {
         ),
         body: TabBarView(
           children: <Widget>[
-            CameraTab(),
-            ChatsTab(),
-            StatusTab(),
-            CallsTab(),
+            CameraPage(),
+            ChatsPage(),
+            StatusPage(),
+            CallsPage(),
           ],
         ),
         floatingActionButton: FloatingActionButton(

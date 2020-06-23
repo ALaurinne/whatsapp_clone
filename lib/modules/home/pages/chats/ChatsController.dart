@@ -1,11 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:new_project/config/config.dart';
-import 'package:new_project/models/ChatListItem.dart';
-import 'package:new_project/screens/ChatScreen.dart';
+import 'package:new_project/modules/home/pages/chats/models/ChatListItem.dart';
 
-class ChatsTab extends StatelessWidget {
- 
-  final List<ChatListItem> chatListItems = [
+final List<ChatListItem> chatListItems = [
     ChatListItem( 
       profileUrl: "https://media-exp1.licdn.com/dms/image/C4D03AQGiVrw4tHuwZQ/profile-displayphoto-shrink_400_400/0?e=1597276800&v=beta&t=pnlHgBNnmwOAnYUxSq6UGCakbWfEev2SU8rXc6b58wY",
       personName: "Laurinne Oliveira",
@@ -70,66 +65,3 @@ class ChatsTab extends StatelessWidget {
       notRead: true,
     ),
   ];
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: chatListItems.length,
-      itemBuilder: (ctx, i) {
-        return ListTile(
-          title: Text(chatListItems[i].personName),
-          subtitle: Text(chatListItems[i].lastMessage),
-          trailing: Column(
-            children: <Widget>[
-              Text(
-                chatListItems[i].date,
-                style: chatListItems[i].notRead
-                    ? TextStyle(
-                        color: secondaryColor, fontWeight: FontWeight.bold)
-                    : TextStyle(color: Colors.grey),
-              ),
-              Padding(
-                padding: EdgeInsets.all(5),
-              ),
-              Container(
-                width: chatListItems[i].notRead ? 30 : 0, // gambiarra
-                height: chatListItems[i].notRead ? 30 : 0, // mais gambiarra
-                decoration: BoxDecoration(
-                  color: secondaryColor,
-                  borderRadius: BorderRadius.all(Radius.circular(100)),
-                ),
-                child: Center(
-                  child: Text(
-                    '3',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          leading: CircleAvatar(
-            backgroundColor: Colors.grey,
-            backgroundImage: NetworkImage(
-              chatListItems[i].profileUrl,
-            ),
-          ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ChatScreen(person: chatListItems[i]),
-              ),
-            );
-          
-          },
-        );
-      },
-      separatorBuilder: (ctx, i) {
-        return Divider();
-      },
-    );
-  }
-}
