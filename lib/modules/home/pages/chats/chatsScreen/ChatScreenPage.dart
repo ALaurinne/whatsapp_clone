@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/config/config.dart';
+import 'package:new_project/modules/home/pages/chats/chatsScreen/ChatScreenController.dart';
 import 'package:new_project/modules/home/pages/chats/models/ChatListItem.dart';
 import 'package:new_project/modules/home/pages/chats/models/ChatMessage.dart';
 
@@ -13,43 +14,27 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final List<ChatMessage> messages = [
-    ChatMessage(isSentByMe: false, message: "Oláaa"),
-    ChatMessage(isSentByMe: true, message: "Oi oi"),
-    ChatMessage(isSentByMe: false, message: "Como cê tá?"),
-    ChatMessage(isSentByMe: true, message: "Vivendo ou sobrevivendo"),
-    ChatMessage(isSentByMe: true, message: "e vc?"),
-    ChatMessage(isSentByMe: false, message: "to beeem"),
-    ChatMessage(isSentByMe: false, message: "Oláaa"),
-    ChatMessage(isSentByMe: true, message: "Oi oi"),
-    ChatMessage(isSentByMe: false, message: "Como cê tá?"),
-    ChatMessage(isSentByMe: true, message: "Vivendo ou sobrevivendo"),
-    ChatMessage(isSentByMe: true, message: "e vc?"),
-    ChatMessage(isSentByMe: false, message: "to beeem"),
-    ChatMessage(isSentByMe: false, message: "Oláaa"),
-    ChatMessage(isSentByMe: true, message: "Oi oi"),
-    ChatMessage(isSentByMe: false, message: "Como cê tá?"),
-    ChatMessage(isSentByMe: true, message: "Vivendo ou sobrevivendo"),
-    ChatMessage(isSentByMe: true, message: "e vc?"),
-    ChatMessage(isSentByMe: false, message: "Vai dar certo"),
-  ];
-
-  TextEditingController myController;
+  
+  final controller = ChatScreenController();
+  TextEditingController textFieldController;
 
   void initState() {
     // primeria coisa que roda
     print("init");
     super.initState();
-    myController = TextEditingController();
+    textFieldController = TextEditingController();
   }
 
   void dispose() {
     // ao finalizar o widget
     // Clean up the controller when the widget is disposed.
     print("dispose");
-    myController.dispose();
+    textFieldController.dispose();
     super.dispose();
   }
+
+
+  
 
   Widget renderChatMessage(ChatMessage message) {
     return Column(
@@ -102,7 +87,7 @@ class _ChatScreenState extends State<ChatScreen> {
           Flexible(
             child: Container(
               child: TextField(
-                controller: myController,
+                controller: textFieldController,
                 decoration: InputDecoration.collapsed(
                   hintText: "Your Message Here",
                   hintStyle: TextStyle(
@@ -133,11 +118,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   sendMessage() {
     setState(() {
-      messages.add(ChatMessage(
-        isSentByMe: true,
-        message: myController.text,
-      ));
-      myController.clear();
+      controller.sendMessage(textFieldController.text);
     });
   }
 
@@ -163,8 +144,8 @@ class _ChatScreenState extends State<ChatScreen> {
         children: <Widget>[
           Flexible(
             child: ListView.builder(
-              itemCount: messages.length,
-              itemBuilder: (ctx, i) => renderChatMessage(messages[i]),
+              itemCount: controller.messages.length,
+              itemBuilder: (ctx, i) => renderChatMessage(controller.messages[i]),
             ),
           ),
           Divider(),

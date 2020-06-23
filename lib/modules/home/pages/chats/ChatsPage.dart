@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/config/config.dart';
 import 'package:new_project/modules/home/pages/chats/ChatsController.dart';
-import 'package:new_project/modules/home/pages/chats/pages/ChatScreen.dart';
+import 'package:new_project/modules/home/pages/chats/chatsScreen/ChatScreenPage.dart';
 
 class ChatsPage extends StatelessWidget {
  
-  
-
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
