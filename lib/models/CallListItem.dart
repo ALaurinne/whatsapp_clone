@@ -1,16 +1,13 @@
-class ChatListItem{
+class CallListItem{
   final String profileUrl;
   final String personName;
-  final String lastMessage;
   final String date;
-   bool notRead;
+  final bool isCall;
 
-  ChatListItem({
+  CallListItem({
     this.profileUrl,
     this.personName,
-    this.lastMessage,
     this.date,
-    this.notRead,
+    this.isCall,
   });
 }
-

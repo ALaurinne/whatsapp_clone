@@ -58,7 +58,7 @@ class HomePage extends StatelessWidget {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => print("open chats"),
+          onPressed: () {},
           child: Icon(
             Icons.chat,
             color: Colors.white,
