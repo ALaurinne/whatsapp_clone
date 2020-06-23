@@ -5,8 +5,9 @@ import 'package:new_project/modules/home/pages/camera/CameraPage.dart';
 import 'package:new_project/modules/home/pages/chats/ChatsPage.dart';
 import 'package:new_project/modules/home/pages/story/StatusPage.dart';
 
-
 class HomePage extends StatelessWidget {
+  const HomePage({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -57,14 +58,6 @@ class HomePage extends StatelessWidget {
             StatusPage(),
             CallsPage(),
           ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(
-            Icons.chat,
-            color: Colors.white,
-          ),
-          backgroundColor: primaryColor,
         ),
       ),
     );

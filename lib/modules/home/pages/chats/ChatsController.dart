@@ -1,5 +1,16 @@
 import 'package:new_project/modules/home/pages/chats/models/ChatListItem.dart';
 
+class ChatsController {
+  newChat(){
+    chatListItems.add(ChatListItem(
+      profileUrl: "https://scontent.fssa7-1.fna.fbcdn.net/v/t1.0-9/82614383_2716249885097419_3396061057905590272_n.jpg?_nc_cat=110&_nc_sid=7aed08&_nc_ohc=vnnyB8GH9QAAX_PcP8I&_nc_ht=scontent.fssa7-1.fna&oh=167bc2a94c8f7809c3b2fe9980ea56aa&oe=5F08E134",
+      personName: "NEW",
+      lastMessage: "WILL WORK",
+      date: "16:00",
+      notRead: true,      
+    ));
+  }
+
 final List<ChatListItem> chatListItems = [
     ChatListItem( 
       profileUrl: "https://media-exp1.licdn.com/dms/image/C4D03AQGiVrw4tHuwZQ/profile-displayphoto-shrink_400_400/0?e=1597276800&v=beta&t=pnlHgBNnmwOAnYUxSq6UGCakbWfEev2SU8rXc6b58wY",
@@ -65,3 +76,5 @@ final List<ChatListItem> chatListItems = [
       notRead: true,
     ),
   ];
+
+}

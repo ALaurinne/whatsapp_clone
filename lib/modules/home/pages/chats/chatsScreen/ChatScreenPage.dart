@@ -14,7 +14,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  
   final controller = ChatScreenController();
   TextEditingController textFieldController;
 
@@ -32,9 +31,6 @@ class _ChatScreenState extends State<ChatScreen> {
     textFieldController.dispose();
     super.dispose();
   }
-
-
-  
 
   Widget renderChatMessage(ChatMessage message) {
     return Column(
@@ -76,6 +72,8 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget renderTextBox() {
+    bool isTyping = false;
+
     return Container(
       margin: EdgeInsets.only(
         bottom: 20,
@@ -86,31 +84,56 @@ class _ChatScreenState extends State<ChatScreen> {
         children: <Widget>[
           Flexible(
             child: Container(
+              color: Colors.white,
               child: TextField(
-                controller: textFieldController,
-                decoration: InputDecoration.collapsed(
-                  hintText: "Your Message Here",
-                  hintStyle: TextStyle(
-                    color: Colors.grey,
+                  controller: textFieldController,
+                  decoration: InputDecoration(
+                    hintText: "Your Message Here",
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                    ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        Icons.camera_alt,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {},
+                    ),
+                    prefixIcon: IconButton(
+                      icon: Icon(
+                        Icons.tag_faces,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {},
+                    ),
                   ),
+                  onChanged: (_) {
+                      isTyping = true;
+                  },
                 ),
+                
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+            color: primaryColor,
+            shape: BoxShape.circle
+          ),
+            child: IconButton(
+              icon: Icon(
+                isTyping? Icons.send : Icons.mic,
+                color: Colors.white,
               ),
+              onPressed: () {},
             ),
           ),
-          IconButton(
-            icon: Icon(
-              Icons.attach_file,
-              color: Colors.black,
-            ),
-            onPressed: () {},
-          ),
-          FloatingActionButton(
-              mini: true,
-              backgroundColor: primaryColor,
-              onPressed: sendMessage,
-              child: Icon(
-                Icons.send,
-              ))
+          // FloatingActionButton(
+          //     mini: true,
+          //     backgroundColor: primaryColor,
+          //     onPressed: sendMessage,
+          //     child: Icon(
+          //       Icons.send,
+          //     ))
         ],
       ),
     );
@@ -145,7 +168,8 @@ class _ChatScreenState extends State<ChatScreen> {
           Flexible(
             child: ListView.builder(
               itemCount: controller.messages.length,
-              itemBuilder: (ctx, i) => renderChatMessage(controller.messages[i]),
+              itemBuilder: (ctx, i) =>
+                  renderChatMessage(controller.messages[i]),
             ),
           ),
           Divider(),
