@@ -13,16 +13,16 @@ class ChatsController {
   }
 
   buildSearchList(searchText) {
-    if (searchText.isEmpty) {
-      return chatListItems;
-    } else {
-      List<ChatListItem> searchList = chatListItems
-          .where((i) => i.personName.toLowerCase().contains(searchText.toLowerCase()))
-          .toList();
+    bool contains(ChatListItem i) => i.personName.toLowerCase().contains(searchText.toLowerCase());
 
-      return searchList;
-    }
+    return searchText.isEmpty
+        ? chatListItems
+        : chatListItems
+            .where(contains)
+            .toList();
   }
+
+  final List<ChatListItem> chatFiltredItems = [];
 
   final List<ChatListItem> chatListItems = [
     ChatListItem(

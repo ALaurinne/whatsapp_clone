@@ -14,6 +14,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  bool isTyping = false;
   final controller = ChatScreenController();
   TextEditingController textFieldController;
 
@@ -72,7 +73,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget renderTextBox() {
-    bool isTyping = false;
+    
 
     return Container(
       margin: EdgeInsets.only(
@@ -108,7 +109,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
                 onChanged: (_) {
-                  isTyping = true;
+                  setState(() {isTyping = true; });
                 },
               ),
             ),
@@ -141,6 +142,7 @@ class _ChatScreenState extends State<ChatScreen> {
       controller.sendMessage(textFieldController.text);
     });
     textFieldController.text ='';
+    isTyping = false;
   }
 
   @override
@@ -149,20 +151,19 @@ class _ChatScreenState extends State<ChatScreen> {
       backgroundColor: chatBackgroundColor,
       appBar: AppBar(
         leading: ChatLeading(profileUrl: widget.person.profileUrl),
-        title: Align(
-          alignment: Alignment.topLeft,
-          child: Column(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
                 widget.person.personName,
               ),
+              Padding(padding: EdgeInsets.all(1)),
               Text(
-                widget.person.lastMessage,
-                style: TextStyle(fontSize: 10, color: Colors.grey),
+                "online",
+                style: TextStyle(fontSize: 12),
               ),
             ],
           ),
-        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.call),
