@@ -11,6 +11,20 @@ class ChatsController {
     ));
   }
 
+buildSearchList(searchText) {
+    if (searchText.isEmpty) {
+      return chatListItems;
+    } else {
+      List<ChatListItem> searchList = List();
+      for (int i = 0; i < chatListItems.length; i++) {
+        String name = chatListItems.elementAt(i).personName;
+        if (name.toLowerCase().contains(searchText.toLowerCase())) {
+          searchList.add(chatListItems[i]);
+        }
+      }
+      return searchList;
+    }
+  }
 final List<ChatListItem> chatListItems = [
     ChatListItem( 
       profileUrl: "https://media-exp1.licdn.com/dms/image/C4D03AQGiVrw4tHuwZQ/profile-displayphoto-shrink_400_400/0?e=1597276800&v=beta&t=pnlHgBNnmwOAnYUxSq6UGCakbWfEev2SU8rXc6b58wY",

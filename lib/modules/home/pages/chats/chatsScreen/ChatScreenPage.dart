@@ -86,45 +86,42 @@ class _ChatScreenState extends State<ChatScreen> {
             child: Container(
               color: Colors.white,
               child: TextField(
-                  controller: textFieldController,
-                  decoration: InputDecoration(
-                    hintText: "Your Message Here",
-                    hintStyle: TextStyle(
+                controller: textFieldController,
+                decoration: InputDecoration(
+                  hintText: "Your Message Here",
+                  hintStyle: TextStyle(
+                    color: Colors.grey,
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      Icons.camera_alt,
                       color: Colors.grey,
                     ),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        Icons.camera_alt,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {},
-                    ),
-                    prefixIcon: IconButton(
-                      icon: Icon(
-                        Icons.tag_faces,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {},
-                    ),
+                    onPressed: () {},
                   ),
-                  onChanged: (_) {
-                      isTyping = true;
-                  },
+                  prefixIcon: IconButton(
+                    icon: Icon(
+                      Icons.tag_faces,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () {},
+                  ),
                 ),
-                
+                onChanged: (_) {
+                  isTyping = true;
+                },
+              ),
             ),
           ),
           Container(
-            decoration: BoxDecoration(
-            color: primaryColor,
-            shape: BoxShape.circle
-          ),
+            decoration:
+                BoxDecoration(color: primaryColor, shape: BoxShape.circle),
             child: IconButton(
               icon: Icon(
-                isTyping? Icons.send : Icons.mic,
+                isTyping ? Icons.send : Icons.mic,
                 color: Colors.white,
               ),
-              onPressed: () {},
+              onPressed: sendMessage,
             ),
           ),
           // FloatingActionButton(
@@ -143,6 +140,7 @@ class _ChatScreenState extends State<ChatScreen> {
     setState(() {
       controller.sendMessage(textFieldController.text);
     });
+    textFieldController.text ='';
   }
 
   @override
@@ -151,10 +149,27 @@ class _ChatScreenState extends State<ChatScreen> {
       backgroundColor: chatBackgroundColor,
       appBar: AppBar(
         leading: ChatLeading(profileUrl: widget.person.profileUrl),
-        title: Text(widget.person.personName),
+        title: Align(
+          alignment: Alignment.topLeft,
+          child: Column(
+            children: <Widget>[
+              Text(
+                widget.person.personName,
+              ),
+              Text(
+                widget.person.lastMessage,
+                style: TextStyle(fontSize: 10, color: Colors.grey),
+              ),
+            ],
+          ),
+        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.call),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.attach_file),
             onPressed: () {},
           ),
           IconButton(
@@ -182,6 +197,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 }
 
+//Cabeçalho
 class ChatLeading extends StatelessWidget {
   const ChatLeading({
     Key key,

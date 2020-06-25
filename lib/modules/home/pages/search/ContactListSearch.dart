@@ -3,34 +3,45 @@ import 'package:new_project/config/config.dart';
 import 'package:new_project/modules/home/pages/chats/ChatsController.dart';
 import 'package:new_project/modules/home/pages/chats/chatsScreen/ChatScreenPage.dart';
 
-class ChatsPage extends StatefulWidget {
+class ContactListSearch extends StatefulWidget {
+
+  
+  final String text;
+
+  const ContactListSearch({Key key, this.text}) : super(key: key);
+
   @override
-  _ChatsPageState createState() => _ChatsPageState();
+  _ContactListSearchState createState() => _ContactListSearchState();
 }
 
-class _ChatsPageState extends State<ChatsPage> {
-  final controller = ChatsController();
-
-  newChatMessage(){
-    setState(() {
-      controller.newChat();
-    });
+class _ContactListSearchState extends State<ContactListSearch> {
+  ChatsController controller = ChatsController();
+  
+  void initState() {
+    // primeria coisa que roda
+    super.initState();
   }
 
+  void dispose() {
+    // ao finalizar o widget
+    // Clean up the controller when the widget is disposed.
+    super.dispose();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: ListView.separated(
-        itemCount: controller.chatListItems.length,
+        itemCount: controller.buildSearchList(widget.text).length,
         itemBuilder: (ctx, i) {
           return ListTile(
-            title: Text(controller.chatListItems[i].personName),
-            subtitle: Text(controller.chatListItems[i].lastMessage),
+            title: Text(controller.buildSearchList(widget.text)[i].personName),
+            subtitle: Text(controller.buildSearchList(widget.text)[i].lastMessage),
             trailing: Column(
               children: <Widget>[
                 Text(
-                  controller.chatListItems[i].date,
-                  style: controller.chatListItems[i].notRead
+                  controller.buildSearchList(widget.text)[i].date,
+                  style: controller.buildSearchList(widget.text)[i].notRead
                       ? TextStyle(
                           color: secondaryColor, fontWeight: FontWeight.bold)
                       : TextStyle(color: Colors.grey),
@@ -39,8 +50,8 @@ class _ChatsPageState extends State<ChatsPage> {
                   padding: EdgeInsets.all(5),
                 ),
                 Container(
-                  width: controller.chatListItems[i].notRead ? 30 : 0, // gambiarra
-                  height: controller.chatListItems[i].notRead ? 30 : 0, // mais gambiarra
+                  width: controller.buildSearchList(widget.text)[i].notRead ? 30 : 0, // gambiarra
+                  height: controller.buildSearchList(widget.text)[i].notRead ? 30 : 0, // mais gambiarra
                   decoration: BoxDecoration(
                     color: secondaryColor,
                     borderRadius: BorderRadius.all(Radius.circular(100)),
@@ -60,14 +71,14 @@ class _ChatsPageState extends State<ChatsPage> {
             leading: CircleAvatar(
               backgroundColor: Colors.grey,
               backgroundImage: NetworkImage(
-                controller.chatListItems[i].profileUrl,
+                controller.buildSearchList(widget.text)[i].profileUrl,
               ),
             ),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ChatScreen(person: controller.chatListItems[i]),
+                  builder: (context) => ChatScreen(person: controller.buildSearchList(widget.text)[i]),
                 ),
               );
             
@@ -80,7 +91,7 @@ class _ChatsPageState extends State<ChatsPage> {
         },
       ),
     floatingActionButton: FloatingActionButton(
-          onPressed: newChatMessage,
+          onPressed: () {},
           child: Icon(
             Icons.chat,
             color: Colors.white,

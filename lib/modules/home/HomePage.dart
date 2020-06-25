@@ -1,12 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/config/config.dart';
+import 'package:new_project/modules/home/pages/appbar/AppBarSearch.dart';
+import 'package:new_project/modules/home/pages/appbar/AppBarTitle.dart';
 import 'package:new_project/modules/home/pages/calls/CallsPage.dart';
 import 'package:new_project/modules/home/pages/camera/CameraPage.dart';
 import 'package:new_project/modules/home/pages/chats/ChatsPage.dart';
+import 'package:new_project/modules/home/pages/search/ContactListSearch.dart';
 import 'package:new_project/modules/home/pages/story/StatusPage.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
+  
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  TextEditingController textFieldController = TextEditingController();
+  bool isSearching;
+  String text;
+
+  searchChat() {
+    setState(() {
+      isSearching = !isSearching;
+      textFieldController.clear();
+    });
+  }
+  onClear() {
+    setState(() {
+      textFieldController.clear();
+    });
+  }
+
+  void initState() {
+    // primeria coisa que roda
+    print("init");
+    super.initState();
+    isSearching = false;
+    textFieldController.clear();
+  }
+
+  void dispose() {
+    // ao finalizar o widget
+    // Clean up the controller when the widget is disposed.
+    print("dispose");
+    super.dispose();
+    textFieldController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +56,19 @@ class HomePage extends StatelessWidget {
       initialIndex: 1,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            "WhatsApp",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
+          title: isSearching
+              ? AppBarSearch(
+                  searchChat: searchChat,
+                  onSearchChange: (text) {
+                    setState(() {
+                    this.textFieldController.text = text;
+                    });
+                  },
+                  onClear: onClear,
+                )
+              : AppBarTitle(),
           backgroundColor: primaryColor,
-          bottom: TabBar(
+          bottom: isSearching? null : TabBar(
             indicatorColor: Colors.white,
             tabs: <Widget>[
               Tab(
@@ -37,29 +85,47 @@ class HomePage extends StatelessWidget {
               ),
             ],
           ),
-          actions: <Widget>[
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.search),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.more_vert),
-            ),
-          ],
+          actions: !isSearching
+              ? <Widget>[
+                  IconButton(
+                    onPressed: searchChat,
+                    icon: Icon(Icons.search),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.more_vert),
+                  ),
+                ]
+              : null,
         ),
-        body: TabBarView(
-          children: <Widget>[
-            CameraPage(),
-            ChatsPage(),
-            StatusPage(),
-            CallsPage(),
-          ],
-        ),
+        body: textFieldController.text.isEmpty ? TabViews(): ContactListSearch( text: textFieldController.text) ,
       ),
     );
   }
 }
+
+class TabViews extends StatelessWidget {
+  const TabViews({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TabBarView(
+      children: <Widget>[
+        CameraPage(),
+        ChatsPage(),
+        StatusPage(),
+        CallsPage(),
+      ],
+    );
+  }
+}
+
+
+
+
+
