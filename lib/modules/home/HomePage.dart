@@ -5,12 +5,10 @@ import 'package:new_project/modules/home/pages/appbar/AppBarTitle.dart';
 import 'package:new_project/modules/home/pages/calls/CallsPage.dart';
 import 'package:new_project/modules/home/pages/camera/CameraPage.dart';
 import 'package:new_project/modules/home/pages/chats/ChatsPage.dart';
-import 'package:new_project/modules/home/pages/search/ContactListSearch.dart';
 import 'package:new_project/modules/home/pages/story/StatusPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
-  
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -27,6 +25,7 @@ class _HomePageState extends State<HomePage> {
       textFieldController.clear();
     });
   }
+
   onClear() {
     setState(() {
       textFieldController.clear();
@@ -61,30 +60,32 @@ class _HomePageState extends State<HomePage> {
                   searchChat: searchChat,
                   onSearchChange: (text) {
                     setState(() {
-                    this.textFieldController.text = text;
+                      this.textFieldController.text = text;
                     });
                   },
                   onClear: onClear,
                 )
               : AppBarTitle(),
           backgroundColor: primaryColor,
-          bottom: isSearching? null : TabBar(
-            indicatorColor: Colors.white,
-            tabs: <Widget>[
-              Tab(
-                icon: Icon(Icons.camera_alt),
-              ),
-              Tab(
-                child: Text("CONVERSAS"),
-              ),
-              Tab(
-                child: Text("STATUS"),
-              ),
-              Tab(
-                child: Text("CHAMADAS"),
-              ),
-            ],
-          ),
+          bottom: isSearching
+              ? null
+              : TabBar(
+                  indicatorColor: Colors.white,
+                  tabs: <Widget>[
+                    Tab(
+                      icon: Icon(Icons.camera_alt),
+                    ),
+                    Tab(
+                      child: Text("CONVERSAS"),
+                    ),
+                    Tab(
+                      child: Text("STATUS"),
+                    ),
+                    Tab(
+                      child: Text("CHAMADAS"),
+                    ),
+                  ],
+                ),
           actions: !isSearching
               ? <Widget>[
                   IconButton(
@@ -101,31 +102,15 @@ class _HomePageState extends State<HomePage> {
                 ]
               : null,
         ),
-        body: textFieldController.text.isEmpty ? TabViews(): ContactListSearch( text: textFieldController.text) ,
+        body: TabBarView(
+          children: <Widget>[
+            CameraPage(),
+            ChatsPage(text: textFieldController.text),
+            StatusPage(),
+            CallsPage(),
+          ],
+        ),
       ),
     );
   }
 }
-
-class TabViews extends StatelessWidget {
-  const TabViews({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TabBarView(
-      children: <Widget>[
-        CameraPage(),
-        ChatsPage(),
-        StatusPage(),
-        CallsPage(),
-      ],
-    );
-  }
-}
-
-
-
-
-
