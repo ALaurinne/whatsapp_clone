@@ -57,9 +57,7 @@ class _AppBarSearchState extends State<AppBarSearch> {
         fillColor: Colors.white,
         filled: true,
       ),
-      onChanged: (text) {
-        widget.onSearchChange(text);
-      },
+      onChanged: widget.onSearchChange,
       // widget.onSearchChange,
     );
   }
