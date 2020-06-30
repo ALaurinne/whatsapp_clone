@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:new_project/config/config.dart';
 import 'package:new_project/modules/home/pages/appbar/AppBarSearch.dart';
 import 'package:new_project/modules/home/pages/appbar/AppBarTitle.dart';
 import 'package:new_project/modules/home/pages/calls/CallsPage.dart';
 import 'package:new_project/modules/home/pages/camera/CameraPage.dart';
+import 'package:new_project/modules/home/pages/chats/ChatsController.dart';
 import 'package:new_project/modules/home/pages/chats/ChatsPage.dart';
 import 'package:new_project/modules/home/pages/story/StatusPage.dart';
 
@@ -16,6 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TextEditingController textFieldController = TextEditingController();
+  final controller = ChatsController();
   bool isSearching;
   String text;
 
@@ -51,66 +54,68 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
-      initialIndex: 1,
-      child: Scaffold(
-        appBar: AppBar(
-          title: isSearching
-              ? AppBarSearch(
-                  searchChat: searchChat,
-                  onSearchChange: (text) {
-                    setState(() {
-                      this.textFieldController.text = text;
-                    });
-                  },
-                  onClear: onClear,
-                )
-              : AppBarTitle(),
-          backgroundColor: primaryColor,
-          bottom: isSearching
-              ? null
-              : TabBar(
-                  indicatorColor: Colors.white,
-                  tabs: <Widget>[
-                    Tab(
-                      icon: Icon(Icons.camera_alt),
-                    ),
-                    Tab(
-                      child: Text("CONVERSAS"),
-                    ),
-                    Tab(
-                      child: Text("STATUS"),
-                    ),
-                    Tab(
-                      child: Text("CHAMADAS"),
-                    ),
-                  ],
-                ),
-          actions: !isSearching
-              ? <Widget>[
-                  IconButton(
-                    onPressed: searchChat,
-                    icon: Icon(Icons.search),
+        length: 4,
+        initialIndex: 1,
+        child: Scaffold(
+          appBar: AppBar(
+            title: isSearching
+                ? AppBarSearch(
+                    searchChat: searchChat,
+                    onSearchChange: (text) {
+                      controller.setFilter(text);
+                    },
+                    //     (text) {
+                    //   setState(() {
+                    //     this.textFieldController.text = text;
+                    //   });
+                    // },
+                    onClear: textFieldController.clear,
+                  )
+                : AppBarTitle(),
+            backgroundColor: primaryColor,
+            bottom: isSearching
+                ? null
+                : TabBar(
+                    indicatorColor: Colors.white,
+                    tabs: <Widget>[
+                      Tab(
+                        icon: Icon(Icons.camera_alt),
+                      ),
+                      Tab(
+                        child: Text("CONVERSAS"),
+                      ),
+                      Tab(
+                        child: Text("STATUS"),
+                      ),
+                      Tab(
+                        child: Text("CHAMADAS"),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.more_vert),
-                  ),
-                ]
-              : null,
-        ),
-        body: TabBarView(
-          children: <Widget>[
-            CameraPage(),
-            ChatsPage(text: textFieldController.text),
-            StatusPage(),
-            CallsPage(),
-          ],
-        ),
-      ),
-    );
+            actions: !isSearching
+                ? <Widget>[
+                    IconButton(
+                      onPressed: searchChat,
+                      icon: Icon(Icons.search),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.more_vert),
+                    ),
+                  ]
+                : null,
+          ),
+          body: TabBarView(
+            children: <Widget>[
+              CameraPage(),
+              ChatsPage(text: textFieldController.text),
+              StatusPage(),
+              CallsPage(),
+            ],
+          ),
+        ));
   }
 }

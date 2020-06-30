@@ -35,13 +35,13 @@ class _ChatsPageState extends State<ChatsPage> {
   @override
   Widget build(BuildContext context) {
     // Alterando filtro
-    controller.setFilter(widget.text);
+    // controller.setFilter(widget.text);
 
     return Scaffold(
       body: Observer(
         builder: (_) {
           return ChatsListView(
-            list: controller.output.data,
+            list: controller.listFiltered,
           );
         },
       ),
