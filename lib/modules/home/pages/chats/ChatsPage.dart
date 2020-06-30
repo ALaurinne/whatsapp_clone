@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:new_project/config/config.dart';
 import 'package:new_project/modules/home/pages/chats/ChatsController.dart';
 import 'package:new_project/modules/home/pages/chats/chatsScreen/ChatScreenPage.dart';
@@ -17,9 +18,7 @@ class _ChatsPageState extends State<ChatsPage> {
   final controller = ChatsController();
 
   newChatMessage() {
-    setState(() {
-      controller.newChat();
-    });
+    controller.newChat();
   }
 
   void initState() {
@@ -35,9 +34,16 @@ class _ChatsPageState extends State<ChatsPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Alterando filtro
+    controller.setFilter(widget.text);
+
     return Scaffold(
-      body: ChatsListView(
-        list: controller.buildSearchList(widget.text),
+      body: Observer(
+        builder: (_) {
+          return ChatsListView(
+            list: controller.output.data,
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: newChatMessage,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:new_project/config/config.dart';
 import 'package:new_project/modules/home/pages/chats/chatsScreen/ChatScreenController.dart';
 import 'package:new_project/modules/home/pages/chats/models/ChatListItem.dart';
@@ -73,8 +74,6 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget renderTextBox() {
-    
-
     return Container(
       margin: EdgeInsets.only(
         bottom: 20,
@@ -109,7 +108,9 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
                 onChanged: (_) {
-                  setState(() {isTyping = true; });
+                  setState(() {
+                    isTyping = true;
+                  });
                 },
               ),
             ),
@@ -138,10 +139,8 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   sendMessage() {
-    setState(() {
-      controller.sendMessage(textFieldController.text);
-    });
-    textFieldController.text ='';
+    controller.sendMessage(textFieldController.text);
+    textFieldController.text = '';
     isTyping = false;
   }
 
@@ -153,17 +152,17 @@ class _ChatScreenState extends State<ChatScreen> {
         leading: ChatLeading(profileUrl: widget.person.profileUrl),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                widget.person.personName,
-              ),
-              Padding(padding: EdgeInsets.all(1)),
-              Text(
-                "online",
-                style: TextStyle(fontSize: 12),
-              ),
-            ],
-          ),
+          children: <Widget>[
+            Text(
+              widget.person.personName,
+            ),
+            Padding(padding: EdgeInsets.all(1)),
+            Text(
+              "online",
+              style: TextStyle(fontSize: 12),
+            ),
+          ],
+        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.call),
@@ -179,20 +178,24 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: <Widget>[
-          Flexible(
-            child: ListView.builder(
-              itemCount: controller.messages.length,
-              itemBuilder: (ctx, i) =>
-                  renderChatMessage(controller.messages[i]),
-            ),
-          ),
-          Divider(),
-          Container(
-            child: renderTextBox(),
-          ),
-        ],
+      body: Observer(
+        builder: (_) {
+          return Column(
+            children: <Widget>[
+              Flexible(
+                child: ListView.builder(
+                  itemCount: controller.messages.length,
+                  itemBuilder: (ctx, i) =>
+                      renderChatMessage(controller.messages[i]),
+                ),
+              ),
+              Divider(),
+              Container(
+                child: renderTextBox(),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

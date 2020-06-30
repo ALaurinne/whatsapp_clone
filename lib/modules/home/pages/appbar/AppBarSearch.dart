@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_project/config/config.dart';
+
 // APP BAR QUANDO COMEÇA A BUSCA
 class AppBarSearch extends StatefulWidget {
   final Function searchChat;
@@ -7,7 +8,8 @@ class AppBarSearch extends StatefulWidget {
   final Function onClear;
 
   // Utilizando as chaves no construtor, utiliza-se parametros nomeados. ( comum para StatefulWidget )
-  const AppBarSearch({Key key, @required this.searchChat, this.onSearchChange, this.onClear})
+  const AppBarSearch(
+      {Key key, @required this.searchChat, this.onSearchChange, this.onClear})
       : super(key: key);
 
   @override
@@ -47,7 +49,7 @@ class _AppBarSearchState extends State<AppBarSearch> {
         suffixIcon: IconButton(
           icon: Icon(Icons.clear),
           color: Colors.grey,
-          onPressed: (){
+          onPressed: () {
             widget.onClear();
             textFieldController.clear();
           },
@@ -58,5 +60,4 @@ class _AppBarSearchState extends State<AppBarSearch> {
       onChanged: widget.onSearchChange,
     );
   }
-
 }
