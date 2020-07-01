@@ -21,16 +21,16 @@ class _ChatsPageState extends State<ChatsPage> {
     controller.newChat();
   }
 
-  void initState() {
-    // primeria coisa que roda
-    super.initState();
-  }
+  // void initState() {
+  //   // primeria coisa que roda
+  //   super.initState();
+  // }
 
-  void dispose() {
-    // ao finalizar o widget
-    // Clean up the controller when the widget is disposed.
-    super.dispose();
-  }
+  // void dispose() {
+  //   // ao finalizar o widget
+  //   // Clean up the controller when the widget is disposed.
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

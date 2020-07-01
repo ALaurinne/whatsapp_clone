@@ -20,18 +20,18 @@ class _HomePageState extends State<HomePage> {
   final controller = HomeController();
   String text;
 
-  void initState() {
-    // primeria coisa que roda
-    print("init");
-    super.initState();
-  }
+  // void initState() {
+  //   // primeria coisa que roda
+  //   print("init");
+  //   super.initState();
+  // }
 
-  void dispose() {
-    // ao finalizar o widget
-    // Clean up the controller when the widget is disposed.
-    print("dispose");
-    super.dispose();
-  }
+  // void dispose() {
+  //   // ao finalizar o widget
+  //   // Clean up the controller when the widget is disposed.
+  //   print("dispose");
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

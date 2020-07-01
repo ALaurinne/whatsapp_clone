@@ -15,24 +15,21 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  bool isTyping = false;
   final controller = ChatScreenController();
-  TextEditingController textFieldController;
+  final textFieldController = TextEditingController();
 
-  void initState() {
-    // primeria coisa que roda
-    print("init");
-    super.initState();
-    textFieldController = TextEditingController();
-  }
+  // void initState() {
+  //   // primeria coisa que roda
+  //   print("init");
+  //   super.initState();
+  //   textFieldController = TextEditingController();
+  // }
 
-  void dispose() {
-    // ao finalizar o widget
-    // Clean up the controller when the widget is disposed.
-    print("dispose");
-    textFieldController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   textFieldController.dispose();
+  // }
 
   Widget renderChatMessage(ChatMessage message) {
     return Column(
@@ -74,75 +71,81 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget renderTextBox() {
-    return Container(
-      margin: EdgeInsets.only(
-        bottom: 20,
-        left: 10,
-        right: 10,
-      ),
-      child: Row(
-        children: <Widget>[
-          Flexible(
-            child: Container(
-              color: Colors.white,
-              child: TextField(
-                controller: textFieldController,
-                decoration: InputDecoration(
-                  hintText: "Your Message Here",
-                  hintStyle: TextStyle(
-                    color: Colors.grey,
-                  ),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      Icons.camera_alt,
-                      color: Colors.grey,
+    return Observer(
+      builder: (_) {
+        return Container(
+          margin: EdgeInsets.only(
+            bottom: 20,
+            left: 10,
+            right: 10,
+          ),
+          child: Row(
+            children: <Widget>[
+              Flexible(
+                child: Container(
+                  color: Colors.white,
+                  child: TextField(
+                    controller: textFieldController,
+                    decoration: InputDecoration(
+                      hintText: "Your Message Here",
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          Icons.camera_alt,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {},
+                      ),
+                      prefixIcon: IconButton(
+                        icon: Icon(
+                          Icons.tag_faces,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {},
+                      ),
                     ),
-                    onPressed: () {},
-                  ),
-                  prefixIcon: IconButton(
-                    icon: Icon(
-                      Icons.tag_faces,
-                      color: Colors.grey,
-                    ),
-                    onPressed: () {},
+                    onChanged: (_) {
+                      controller.changeTyping(true);
+                    },
                   ),
                 ),
-                onChanged: (_) {
-                  setState(() {
-                    isTyping = true;
-                  });
-                },
               ),
-            ),
-          ),
-          Container(
-            decoration:
-                BoxDecoration(color: primaryColor, shape: BoxShape.circle),
-            child: IconButton(
-              icon: Icon(
-                isTyping ? Icons.send : Icons.mic,
-                color: Colors.white,
+              Container(
+                decoration:
+                    BoxDecoration(color: primaryColor, shape: BoxShape.circle),
+                child: IconButton(
+                  icon: Icon(
+                    controller.isTyping ? Icons.send : Icons.mic,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    controller.sendMessage(textFieldController.text);
+                    textFieldController.clear();
+                    controller.changeTyping(false);
+                  },
+                ),
               ),
-              onPressed: sendMessage,
-            ),
+              // FloatingActionButton(
+              //     mini: true,
+              //     backgroundColor: primaryColor,
+              //     onPressed: sendMessage,
+              //     child: Icon(
+              //       Icons.send,
+              //     ))
+            ],
           ),
-          // FloatingActionButton(
-          //     mini: true,
-          //     backgroundColor: primaryColor,
-          //     onPressed: sendMessage,
-          //     child: Icon(
-          //       Icons.send,
-          //     ))
-        ],
-      ),
+        );
+      },
     );
   }
 
-  sendMessage() {
-    controller.sendMessage(textFieldController.text);
-    textFieldController.text = '';
-    isTyping = false;
-  }
+  // sendMessage() {
+  //   controller.sendMessage(textFieldController.text);
+  //   textFieldController.clear();
+  //   controller.changeTyping(false);
+  // }
 
   @override
   Widget build(BuildContext context) {

@@ -54,17 +54,6 @@ mixin _$ChatScreenController on ChatScreenControllerBase, Store {
   }
 
   @override
-  dynamic afterTyping(bool value) {
-    final _$actionInfo = _$ChatScreenControllerBaseActionController.startAction(
-        name: 'ChatScreenControllerBase.afterTyping');
-    try {
-      return super.afterTyping(value);
-    } finally {
-      _$ChatScreenControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic sendMessage(String message) {
     final _$actionInfo = _$ChatScreenControllerBaseActionController.startAction(
         name: 'ChatScreenControllerBase.sendMessage');

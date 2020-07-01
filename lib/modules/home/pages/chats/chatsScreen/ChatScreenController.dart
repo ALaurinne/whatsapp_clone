@@ -20,9 +20,6 @@ abstract class ChatScreenControllerBase with Store {
   @action
   changeTyping(bool value) => isTyping = value;
 
-  @action
-  afterTyping(bool value) => isTyping = value;
-
   @observable
   ObservableList<ChatMessage> messages = [
     ChatMessage(isSentByMe: false, message: "Oláaa"),

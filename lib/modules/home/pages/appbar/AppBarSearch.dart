@@ -17,20 +17,7 @@ class AppBarSearch extends StatefulWidget {
 }
 
 class _AppBarSearchState extends State<AppBarSearch> {
-  TextEditingController textFieldController;
-
-  void initState() {
-    // primeria coisa que roda
-    print("init");
-    super.initState();
-    textFieldController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    textFieldController.dispose();
-  }
+  final textFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
